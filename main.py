@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QTextEdi
 from PyQt5 import QtWidgets
 import sys
 
-
 class Mainwindow(QWidget):
 	def __init__(self):
 		# Контейнер
@@ -44,6 +43,7 @@ class Mainwindow(QWidget):
 	
 	def make_test(self):
 		self.hide_btn()
+		MakeWindow()
 		MakeWindow.make_test(MakeWindow)
 	
 	def main_window(self):
@@ -65,7 +65,7 @@ class MakeWindow(QWidget):
 		self.btn_back_make.setGeometry(860, 800, 200, 100)
 		self.btn_back_make.setStyleSheet(pushButton_StyleSheet)
 		self.btn_back_make.setObjectName("pushButton")
-		self.btn_back_make.clicked.connect(Mainwindow.main)
+		self.btn_back_make.clicked.connect(Mainwindow.main_window)
 		
 		self.btn_left_make = QPushButton('←', self)
 		self.btn_left_make.setGeometry(750, 800, 100, 50)
@@ -101,11 +101,15 @@ class MakeWindow(QWidget):
 			self.btn_right_make.show()
 	
 	def make_test(self):
-		self.btn_right_make.show(), self.btn_left_make.show(), self.btn_back_make.show()
-
+		self.btn_back_make.show(), self.btn_left_make.show(), self.btn_right_make.show()
+	
+	def make_hide(self):
+		self.btn_back_make.hide(), self.btn_left_make.hide(), self.btn_right_make.hide()
+		
 
 class CreatWindow(QWidget):
 	def __init__(self):
+		super().__init__()
 		None
 	
 	def create_test(self):
