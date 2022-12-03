@@ -44,7 +44,6 @@ class Mainwindow(QWidget):
 	def make_test(self):
 		self.hide_btn()
 		MakeWindow()
-		MakeWindow.make_test(MakeWindow)
 	
 	def main_window(self):
 		self.btn_make_main.show(), self.btn_create_main.show(), self.btn_exit_project.show()
@@ -65,7 +64,7 @@ class MakeWindow(QWidget):
 		self.btn_back_make.setGeometry(860, 800, 200, 100)
 		self.btn_back_make.setStyleSheet(pushButton_StyleSheet)
 		self.btn_back_make.setObjectName("pushButton")
-		self.btn_back_make.clicked.connect(Mainwindow.main_window)
+		self.btn_back_make.clicked.connect(Mainwindow)
 		
 		self.btn_left_make = QPushButton('←', self)
 		self.btn_left_make.setGeometry(750, 800, 100, 50)
@@ -80,7 +79,9 @@ class MakeWindow(QWidget):
 		self.btn_right_make.clicked.connect(self.make_test_next)
 		# Переменные
 		self.number_list_make = 0
-	
+		# ==========
+		self.check_make_btn()
+		self.make_test()
 	def make_test_next(self):
 		self.number_list_make += 1
 		self.check_make_btn()
