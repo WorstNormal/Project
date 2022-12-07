@@ -3,10 +3,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QTextEdi
 from PyQt5 import QtWidgets
 import sys
 
-class Mainwindow(QWidget):
+class Window(QWidget):
 	def __init__(self):
-		# Контейнер
 		super().__init__()
+		self.object()
+		Mainwindow()
+	def object(self):
+		# -Главная
+		# Контейнер
 		self.x_pos, self.y_pos = 0, 0
 		self.w_pix, self.h_pix = 1920, 100
 		self.container = QWidget(self)
@@ -22,70 +26,71 @@ class Mainwindow(QWidget):
 		self.hbox = QHBoxLayout(self.container)
 		self.hbox.setContentsMargins(10, 10, 0, 0)
 		# Кнопки
-		# - Главная
 		self.btn_make_main = QPushButton('Пройти тест', self)
 		self.btn_make_main.setGeometry(860, 500, 200, 100)
 		self.btn_make_main.setStyleSheet(pushButton_StyleSheet)
 		self.btn_make_main.setObjectName("pushButton")
-		self.btn_make_main.clicked.connect(self.make_test)
+		self.btn_make_main.clicked.connect(Mainwindow.make_test)
+		self.btn_make_main.hide()
 		
 		self.btn_create_main = QPushButton('Создать тест', self)
 		self.btn_create_main.setGeometry(860, 650, 200, 100)
 		self.btn_create_main.setStyleSheet(pushButton_StyleSheet)
 		self.btn_create_main.setObjectName("pushButton")
 		self.btn_create_main.clicked.connect(CreatWindow.create_test)
+		self.btn_create_main.hide()
 		
 		self.btn_exit_project = QPushButton('Выйти', self)
 		self.btn_exit_project.setGeometry(860, 800, 200, 100)
 		self.btn_exit_project.setStyleSheet(pushButton_StyleSheet)
 		self.btn_exit_project.setObjectName("pushButton")
-		self.btn_exit_project.clicked.connect(self.exit_project)
-	
-	def make_test(self):
-		self.hide_btn()
-		MakeWindow()
-	
-	def main_window(self):
-		self.btn_make_main.show(), self.btn_create_main.show(), self.btn_exit_project.show()
-	
-	def hide_btn(self):
-		self.btn_make_main.hide(), self.btn_create_main.hide(), self.btn_exit_project.hide()
-	
-	@staticmethod
-	def exit_project():
-		exit()
-
-
-class MakeWindow(QWidget):
-	def __init__(self):
-		super().__init__()
+		self.btn_exit_project.clicked.connect(Mainwindow.exit_project)
+		self.btn_exit_project.hide()
+		# - Выбрать тест
 		# Кнопки
 		self.btn_back_make = QPushButton('Назад', self)
 		self.btn_back_make.setGeometry(860, 800, 200, 100)
 		self.btn_back_make.setStyleSheet(pushButton_StyleSheet)
 		self.btn_back_make.setObjectName("pushButton")
 		self.btn_back_make.clicked.connect(Mainwindow)
+		self.btn_back_make.hide()
 		
 		self.btn_left_make = QPushButton('←', self)
 		self.btn_left_make.setGeometry(750, 800, 100, 50)
 		self.btn_left_make.setStyleSheet(pushButton_StyleSheet)
 		self.btn_left_make.setObjectName("pushButton")
-		self.btn_left_make.clicked.connect(self.make_test_back)
+		self.btn_left_make.clicked.connect(MakeWindow.make_test_back)
+		self.btn_left_make.hide()
 		
 		self.btn_right_make = QPushButton('→', self)
 		self.btn_right_make.setGeometry(1070, 800, 100, 50)
 		self.btn_right_make.setStyleSheet(pushButton_StyleSheet)
 		self.btn_right_make.setObjectName("pushButton")
-		self.btn_right_make.clicked.connect(self.make_test_next)
+		self.btn_right_make.clicked.connect(MakeWindow.make_test_next)
+		self.btn_right_make.hide()
 		# Переменные
 		self.number_list_make = 0
 		# ==========
-		self.check_make_btn()
-		self.make_test()
+		Mainwindow.main_window(self)
+class Mainwindow():
+	def __init__(self):
+		super().__init__()
+	def make_test(self):
+		Mainwindow.hide_btn(Window)
+		MakeWindow()
+	def main_window(self):
+		self.btn_make_main.show(), self.btn_create_main.show(), self.btn_exit_project.show()
+	def hide_btn(self):
+		self.btn_make_main.hide(), self.btn_create_main.hide(), self.btn_exit_project.hide()
+		
+	@staticmethod
+	def exit_project():
+		exit()
+		
+class MakeWindow(Window):
 	def make_test_next(self):
 		self.number_list_make += 1
 		self.check_make_btn()
-	
 	def make_test_back(self):
 		self.number_list_make -= 1
 		self.check_make_btn()
@@ -108,11 +113,7 @@ class MakeWindow(QWidget):
 		self.btn_back_make.hide(), self.btn_left_make.hide(), self.btn_right_make.hide()
 		
 
-class CreatWindow(QWidget):
-	def __init__(self):
-		super().__init__()
-		None
-	
+class CreatWindow(Window):
 	def create_test(self):
 		None
 
@@ -124,6 +125,6 @@ if __name__ == '__main__':
 	#pushButton:pressed {background-color: #686c73;}
 	'''
 	app = QApplication(sys.argv)
-	ex = Mainwindow()
+	ex = Window()
 	ex.showFullScreen()
 	sys.exit(app.exec())
