@@ -71,7 +71,9 @@ class Window(QWidget):
 		self.btn_right_make.clicked.connect(self.make_test_next)
 		self.btn_right_make.hide()
 		self.number_list_make = 0
-	
+		# - Создать тест
+		# Кнопки
+		self.btn
 	# ==========
 	def make_test(self):
 		self.main_hide()
@@ -86,7 +88,7 @@ class Window(QWidget):
 	@staticmethod
 	def exit_project():
 		exit()
-	
+	# ----------------------------------------------------------------------------------
 	def make_test_next(self):
 		self.number_list_make += 1
 		self.check_make_btn()
@@ -113,9 +115,9 @@ class Window(QWidget):
 	
 	def make_hide(self):
 		self.btn_back_make.hide(), self.btn_left_make.hide(), self.btn_right_make.hide()
-	
+	#----------------------------------------------------------------------------------
 	def create_test(self):
-		None
+		F
 
 
 if __name__ == '__main__':
