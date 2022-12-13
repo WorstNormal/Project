@@ -2,10 +2,12 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QTextEdit, QVBoxLayout, QHBoxLayout
 from PyQt5 import QtWidgets
 import sys
+import sqlite3
 
 
 class Window(QWidget):
 	def __init__(self):
+		self.con = sqlite3.connect("database.sqlite")
 		super().__init__()
 		self.object()
 		self.main_window()
