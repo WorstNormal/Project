@@ -1,20 +1,18 @@
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QTextEdit, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QTextEdit, QVBoxLayout, QHBoxLayout, QLineEdit
 from PyQt5 import QtWidgets
 import sys
 import sqlite3
-
 
 class Window(QWidget):
 	def __init__(self):
 		self.con = sqlite3.connect("database.sqlite")
 		super().__init__()
-		self.object()
+		self.main_creat()
+		self.make_create()
+		self.create_create()
 		self.main_window()
-	
-	def object(self):
-		# -Главная
-		# Контейнер
+	def main_creat(self):
 		x_pos, y_pos = 0, 0
 		w_pix, h_pix = 1920, 100
 		self.container = QWidget(self)
@@ -50,7 +48,7 @@ class Window(QWidget):
 		self.btn_exit_project.setObjectName("pushButton")
 		self.btn_exit_project.clicked.connect(self.exit_project)
 		self.btn_exit_project.hide()
-		# - Выбрать тест
+	def make_create(self):
 		# Кнопки
 		self.btn_back_make = QPushButton('Назад', self)
 		self.btn_back_make.setGeometry(860, 800, 200, 100)
@@ -73,20 +71,34 @@ class Window(QWidget):
 		self.btn_right_make.clicked.connect(self.make_test_next)
 		self.btn_right_make.hide()
 		self.number_list_make = 0
-		# - Создать тест
+	def create_create(self):
 		# Кнопки
-		self.btn
-	# ==========
+		self.btn_next_create = QPushButton('Продолжить', self)
+		self.btn_next_create.setGeometry(860, 650, 200, 100)
+		self.btn_next_create.setStyleSheet(pushButton_StyleSheet)
+		self.btn_next_create.setObjectName("pushButton")
+		self.btn_next_create.clicked.connect(self.create_test)
+		self.btn_next_create.hide()
+		
+		self.btn_back_create = QPushButton('Назад', self)
+		self.btn_back_create.setGeometry(860, 800, 200, 100)
+		self.btn_back_create.setStyleSheet(pushButton_StyleSheet)
+		self.btn_back_create.setObjectName("pushButton")
+		self.btn_back_create.clicked.connect(self.create_hide)
+		self.btn_back_create.hide()
+		
+		self.input_ques = QLineEdit(self)
+		self.input_ques.move(150, 90)
+		self.input_ques.hide()
+		# ==========
+	# ----------------------------------------------------------------------------------
 	def make_test(self):
 		self.main_hide()
-	
 	def main_window(self):
 		self.make_hide()
 		self.btn_make_main.show(), self.btn_create_main.show(), self.btn_exit_project.show()
-	
 	def main_hide(self):
 		self.btn_make_main.hide(), self.btn_create_main.hide(), self.btn_exit_project.hide()
-	
 	@staticmethod
 	def exit_project():
 		exit()
@@ -94,11 +106,9 @@ class Window(QWidget):
 	def make_test_next(self):
 		self.number_list_make += 1
 		self.check_make_btn()
-	
 	def make_test_back(self):
 		self.number_list_make -= 1
 		self.check_make_btn()
-	
 	def check_make_btn(self):
 		if self.number_list_make == 10:
 			self.btn_right_make.hide()
@@ -119,7 +129,12 @@ class Window(QWidget):
 		self.btn_back_make.hide(), self.btn_left_make.hide(), self.btn_right_make.hide()
 	#----------------------------------------------------------------------------------
 	def create_test(self):
-		F
+		self.main_hide()
+		self.btn_next_create.show(), self.btn_back_create.show(), self.input_ques.show()
+	
+	def create_hide(self):
+		self.main_window()
+		self.btn_next_create.hide(), self.btn_back_create.hide(), self.input_ques.hide()
 
 
 if __name__ == '__main__':
