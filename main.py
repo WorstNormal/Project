@@ -87,9 +87,17 @@ class Window(QWidget):
 		self.btn_back_create.clicked.connect(self.create_hide)
 		self.btn_back_create.hide()
 		
-		self.input_ques = QLineEdit(self)
-		self.input_ques.move(150, 90)
-		self.input_ques.hide()
+		self.input_name_ques = QTextEdit(self)
+		self.input_name_ques.resize(300, 50)
+		self.input_name_ques.move(800, 500)
+		self.input_name_ques.hide()
+		self.input_name_ques.setStyleSheet(input_StyleSheet)
+		
+		self.input_coun_ques = QTextEdit(self)
+		self.input_coun_ques.resize(300, 50)     
+		self.input_coun_ques.move(800, 500)
+		self.input_coun_ques.hide()
+		self.input_coun_ques.setStyleSheet(input_StyleSheet)
 		# ==========
 	# ----------------------------------------------------------------------------------
 	def make_test(self):
@@ -130,11 +138,11 @@ class Window(QWidget):
 	#----------------------------------------------------------------------------------
 	def create_test(self):
 		self.main_hide()
-		self.btn_next_create.show(), self.btn_back_create.show(), self.input_ques.show()
+		self.btn_next_create.show(), self.btn_back_create.show(), self.input_name_ques.show()
 	
 	def create_hide(self):
 		self.main_window()
-		self.btn_next_create.hide(), self.btn_back_create.hide(), self.input_ques.hide()
+		self.btn_next_create.hide(), self.btn_back_create.hide(), self.input_name_ques.hide()
 
 
 if __name__ == '__main__':
@@ -143,6 +151,7 @@ if __name__ == '__main__':
 	#pushButton:hover {background-color: #78a4e8;}
 	#pushButton:pressed {background-color: #686c73;}
 	'''
+	input_StyleSheet = "font: bold 24px"
 	app = QApplication(sys.argv)
 	ex = Window()
 	ex.showFullScreen()
