@@ -99,8 +99,33 @@ class Window(QWidget):
 		self.input_coun_create.move(1100, 500)
 		self.input_coun_create.hide()
 		self.input_coun_create.setStyleSheet(input_StyleSheet)
+		
+		self.input_var1_create = QLineEdit(self)
+		self.input_var1_create.resize(35, 50)
+		self.input_var1_create.move(1100, 500)
+		self.input_var1_create.hide()
+		self.input_var1_create.setStyleSheet(input_StyleSheet)
+		
+		self.input_var2_create = QLineEdit(self)
+		self.input_var2_create.resize(35, 50)
+		self.input_var2_create.move(1100, 500)
+		self.input_var2_create.hide()
+		self.input_var2_create.setStyleSheet(input_StyleSheet)
+		
+		self.input_var3_create = QLineEdit(self)
+		self.input_var3_create.resize(35, 50)
+		self.input_var3_create.move(1100, 500)
+		self.input_var3_create.hide()
+		self.input_var3_create.setStyleSheet(input_StyleSheet)
+		
+		self.input_var4_create = QLineEdit(self)
+		self.input_var4_create.resize(35, 50)
+		self.input_var4_create.move(1100, 500)
+		self.input_var4_create.hide()
+		self.input_var4_create.setStyleSheet(input_StyleSheet)
 		# Переменные
 		self.number_ind_create = 0
+		self.number_coun_create = 0
 		# ==========
 	# ----------------------------------------------------------------------------------
 	def make_test(self):
@@ -144,15 +169,23 @@ class Window(QWidget):
 	
 	def create_next(self):
 		self.number_ind_create += 1
-		print(self.number_ind_create)
-		if self.number_ind_create == 1:
-			self.input_name_create.hide(), self.input_coun_create.hide()
+		match self.number_ind_create:
+			case 1:
+				self.input_name_create.hide(), self.input_coun_create.hide()
+			case self.number_coun_create:
+				exit()
 	def create_back(self):
 		self.number_ind_create -= 1
-		if self.number_ind_create == -1:
-			self.number_ind_create = 0
-			self.main_window()
-			self.btn_next_create.hide(), self.btn_back_create.hide(), self.input_name_create.hide(), self.input_coun_create.hide()
+		match self.number_ind_create:
+			case -1:
+				self.number_ind_create = 0
+				self.main_window()
+				self.btn_next_create.hide(), self.btn_back_create.hide(), self.input_name_create.hide(), self.input_coun_create.hide()
+			case 0:
+				self.create_test()
+				
+			
+				
 if __name__ == '__main__':
 	pushButton_StyleSheet = '''
 	#pushButton {color: #000000; background-color: #4483e4; border: none; border-radius: 15px;}
