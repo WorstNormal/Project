@@ -70,34 +70,37 @@ class Window(QWidget):
 		self.btn_right_make.setObjectName("pushButton")
 		self.btn_right_make.clicked.connect(self.make_test_next)
 		self.btn_right_make.hide()
+		# Переменные
 		self.number_list_make = 0
 	def create_create(self):
 		# Кнопки
 		self.btn_next_create = QPushButton('Продолжить', self)
-		self.btn_next_create.setGeometry(860, 650, 200, 100)
+		self.btn_next_create.setGeometry(1000, 800, 200, 100)
 		self.btn_next_create.setStyleSheet(pushButton_StyleSheet)
 		self.btn_next_create.setObjectName("pushButton")
-		self.btn_next_create.clicked.connect(self.create_test)
+		self.btn_next_create.clicked.connect(self.create_next)
 		self.btn_next_create.hide()
 		
 		self.btn_back_create = QPushButton('Назад', self)
-		self.btn_back_create.setGeometry(860, 800, 200, 100)
+		self.btn_back_create.setGeometry(720, 800, 200, 100)
 		self.btn_back_create.setStyleSheet(pushButton_StyleSheet)
 		self.btn_back_create.setObjectName("pushButton")
-		self.btn_back_create.clicked.connect(self.create_hide)
+		self.btn_back_create.clicked.connect(self.create_back)
 		self.btn_back_create.hide()
+		# Ввод текста
+		self.input_name_create = QLineEdit(self)
+		self.input_name_create.resize(300, 50)
+		self.input_name_create.move(775, 500)
+		self.input_name_create.hide()
+		self.input_name_create.setStyleSheet(input_StyleSheet)
 		
-		self.input_name_ques = QTextEdit(self)
-		self.input_name_ques.resize(300, 50)
-		self.input_name_ques.move(800, 500)
-		self.input_name_ques.hide()
-		self.input_name_ques.setStyleSheet(input_StyleSheet)
-		
-		self.input_coun_ques = QTextEdit(self)
-		self.input_coun_ques.resize(300, 50)     
-		self.input_coun_ques.move(800, 500)
-		self.input_coun_ques.hide()
-		self.input_coun_ques.setStyleSheet(input_StyleSheet)
+		self.input_coun_create = QLineEdit(self)
+		self.input_coun_create.resize(35, 50)
+		self.input_coun_create.move(1100, 500)
+		self.input_coun_create.hide()
+		self.input_coun_create.setStyleSheet(input_StyleSheet)
+		# Переменные
+		self.number_ind_create = 0
 		# ==========
 	# ----------------------------------------------------------------------------------
 	def make_test(self):
@@ -118,15 +121,14 @@ class Window(QWidget):
 		self.number_list_make -= 1
 		self.check_make_btn()
 	def check_make_btn(self):
-		if self.number_list_make == 10:
-			self.btn_right_make.hide()
-		else:
-			self.btn_right_make.show()
-		
-		if self.number_list_make == 0:
-			self.btn_left_make.hide()
-		else:
-			self.btn_left_make.show()
+		match self.number_list_make:
+			case 10:
+				self.btn_right_make.hide()
+			case 0:
+				self.btn_left_make.hide()
+			case _:
+				self.btn_right_make.show()
+				self.btn_left_make.show()
 	
 	def make_test(self):
 		self.main_hide()
@@ -138,20 +140,26 @@ class Window(QWidget):
 	#----------------------------------------------------------------------------------
 	def create_test(self):
 		self.main_hide()
-		self.btn_next_create.show(), self.btn_back_create.show(), self.input_name_ques.show()
+		self.btn_next_create.show(), self.btn_back_create.show(), self.input_name_create.show(), self.input_coun_create.show()
 	
-	def create_hide(self):
-		self.main_window()
-		self.btn_next_create.hide(), self.btn_back_create.hide(), self.input_name_ques.hide()
-
-
+	def create_next(self):
+		self.number_ind_create += 1
+		print(self.number_ind_create)
+		if self.number_ind_create == 1:
+			self.input_name_create.hide(), self.input_coun_create.hide()
+	def create_back(self):
+		self.number_ind_create -= 1
+		if self.number_ind_create == -1:
+			self.number_ind_create = 0
+			self.main_window()
+			self.btn_next_create.hide(), self.btn_back_create.hide(), self.input_name_create.hide(), self.input_coun_create.hide()
 if __name__ == '__main__':
 	pushButton_StyleSheet = '''
 	#pushButton {color: #000000; background-color: #4483e4; border: none; border-radius: 15px;}
 	#pushButton:hover {background-color: #78a4e8;}
 	#pushButton:pressed {background-color: #686c73;}
 	'''
-	input_StyleSheet = "font: bold 24px"
+	input_StyleSheet = "font: 24px"
 	app = QApplication(sys.argv)
 	ex = Window()
 	ex.showFullScreen()
