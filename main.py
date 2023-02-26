@@ -6,7 +6,7 @@ import sqlite3
 
 class Window(QWidget):
 	def __init__(self):
-		self.con = sqlite3.connect("database.sqlite")
+		self.con = sqlite3.connect("database.db")
 		self.cur = self.con.cursor()
 		super().__init__()
 		self.main_creat()
@@ -176,14 +176,15 @@ class Window(QWidget):
 				self.input_name_create.hide(), self.input_coun_create.hide(), self.btn_back_create.hide()
 				self.input_var1_create.show(), self.input_var2_create.show(), self.input_var3_create.show(), self.input_var4_create.show(),
 			case self.int_coun_create:
+				self.cur.close()
 				exit()
 			case _:
 				self.btn_back_create.show()
 				self.str_var1, self.str_var2, self.str_var3, self.str_var4 = \
 					self.input_var1_create.text(), self.input_var1_create.text(), \
 					self.input_var1_create.text(), self.input_var1_create.text()
-				self.cur.execute("INSERT INTO question(id, var1, var2, var3, var4)" +
-				                 f"VALUES ({self.int_ind_create - 1}, {self.str_var1}, {self.str_var2}, {self.str_var3}, {self.str_var4})")
+				self.cur.execute(f"""INSERT INTO question VALUES({self.int_ind_create}, 2, 3, 4, 5) """)
+				self.con.commit()
 				self.input_var1_create.clear(), self.input_var2_create.clear(), self.input_var3_create.clear(), self.input_var4_create.clear(),
 	def create_back(self):
 		self.int_ind_create -= 1
@@ -207,4 +208,5 @@ if __name__ == '__main__':
 	app = QApplication(sys.argv)
 	ex = Window()
 	ex.showFullScreen()
+
 	sys.exit(app.exec())
