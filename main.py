@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QTextEdi
 from PyQt5 import QtWidgets
 import sys
 import sqlite3
+import json
 
 class Window(QWidget):
 	def __init__(self):
@@ -125,8 +126,12 @@ class Window(QWidget):
 		self.input_var4_create.hide()
 		self.input_var4_create.setStyleSheet(input_StyleSheet)
 		# Переменные
+		self.int_size_question_create = 0
+		self.a = self.cur.execute(f"""Select size from test""").fetchall()
+		self.b = len(self.a)
+		for i in self.a:
+			self.int_size_question_create += i[0]
 		self.int_ind_create = 0
-		self.int_coun_create = 0
 		# ==========
 	# ----------------------------------------------------------------------------------
 	def make_test(self):
@@ -136,8 +141,8 @@ class Window(QWidget):
 		self.btn_make_main.show(), self.btn_create_main.show(), self.btn_exit_project.show()
 	def main_hide(self):
 		self.btn_make_main.hide(), self.btn_create_main.hide(), self.btn_exit_project.hide()
-	@staticmethod
-	def exit_project():
+	def exit_project(self):
+		self.cur.close()
 		exit()
 	# ----------------------------------------------------------------------------------
 	def make_test_next(self):
@@ -173,18 +178,29 @@ class Window(QWidget):
 		match self.int_ind_create:
 			case 1:
 				self.int_coun_create = int(self.input_coun_create.text()) + 1
+				self.list = [0] * int(self.input_coun_create.text())
+				#----
 				self.input_name_create.hide(), self.input_coun_create.hide(), self.btn_back_create.hide()
 				self.input_var1_create.show(), self.input_var2_create.show(), self.input_var3_create.show(), self.input_var4_create.show(),
 			case self.int_coun_create:
 				self.cur.close()
+				self.int_size_question_create += self.int_coun_create
 				exit()
 			case _:
 				self.btn_back_create.show()
 				self.str_var1, self.str_var2, self.str_var3, self.str_var4 = \
-					self.input_var1_create.text(), self.input_var1_create.text(), \
-					self.input_var1_create.text(), self.input_var1_create.text()
-				self.cur.execute(f"""INSERT INTO question VALUES({self.int_ind_create}, 2, 3, 4, 5) """)
-				self.con.commit()
+					self.input_var1_create.text(), self.input_var2_create.text(), \
+					self.input_var3_create.text(), self.input_var4_create.text()
+				if self.list[self.int_ind_create - 2] == 0:
+					self.cur.execute(f"""INSERT INTO question VALUES ({self.int_ind_create + self.int_size_question_create}, {self.str_var1}, {self.str_var2}, {self.str_var3}, {self.str_var4}) """)
+					self.con.commit()
+					self.list[self.int_ind_create - 2] = 1
+				else:
+					self.cur.execute(f"""UPDATE question SET var1 = {self.str_var1} where id = {self.int_ind_create + self.int_size_question_create}""")
+					self.cur.execute(f"""UPDATE question SET var2 = {self.str_var2} where id = {self.int_ind_create + self.int_size_question_create}""")
+					self.cur.execute(f"""UPDATE question SET var3 = {self.str_var3} where id = {self.int_ind_create + self.int_size_question_create}""")
+					self.cur.execute(f"""UPDATE question SET var4 = {self.str_var4} where id = {self.int_ind_create + self.int_size_question_create}""")
+					self.con.commit()
 				self.input_var1_create.clear(), self.input_var2_create.clear(), self.input_var3_create.clear(), self.input_var4_create.clear(),
 	def create_back(self):
 		self.int_ind_create -= 1
@@ -197,6 +213,7 @@ class Window(QWidget):
 				self.input_var1_create.hide(), self.input_var2_create.hide(), self.input_var3_create.hide(), self.input_var4_create.hide()
 			case 1:
 				self.btn_back_create.hide()
+				#self.input_var1_create.setText(*self.cur.execute(f"""Select question"""))
 			
 if __name__ == '__main__':
 	pushButton_StyleSheet = '''
