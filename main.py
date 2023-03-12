@@ -87,12 +87,29 @@ class Window(QWidget):
 		self.btn_right_make.clicked.connect(self.make_test_next)
 		self.btn_right_make.hide()
 		
-		self.btn_test1_make = QPushButton('→', self)
-		self.btn_right_make.setGeometry(1070, 800, 100, 50)
-		self.btn_right_make.setStyleSheet(pushButton_StyleSheet)
-		self.btn_right_make.setObjectName("pushButton")
-		self.btn_right_make.clicked.connect(self.make_test_next)
-		self.btn_right_make.hide()
+		self.btn_test1_make = QPushButton(self)
+		self.btn_test1_make.setGeometry(360, 250, 500, 100)
+		self.btn_test1_make.setStyleSheet(pushButton_StyleSheet)
+		self.btn_test1_make.setObjectName("pushButton")
+		self.btn_test1_make.hide()
+		
+		self.btn_test2_make = QPushButton(self)
+		self.btn_test2_make.setGeometry(1060, 250, 500, 100)
+		self.btn_test2_make.setStyleSheet(pushButton_StyleSheet)
+		self.btn_test2_make.setObjectName("pushButton")
+		self.btn_test2_make.hide()
+		
+		self.btn_test3_make = QPushButton(self)
+		self.btn_test3_make.setGeometry(360, 600, 500, 100)
+		self.btn_test3_make.setStyleSheet(pushButton_StyleSheet)
+		self.btn_test3_make.setObjectName("pushButton")
+		self.btn_test3_make.hide()
+		
+		self.btn_test4_make = QPushButton(self)
+		self.btn_test4_make.setGeometry(1060, 600, 500, 100)
+		self.btn_test4_make.setStyleSheet(pushButton_StyleSheet)
+		self.btn_test4_make.setObjectName("pushButton")
+		self.btn_test4_make.hide()
 		# Переменные
 		self.number_list_make = 0
 	def create_create(self):
@@ -196,6 +213,7 @@ class Window(QWidget):
 		self.main_hide()
 	def main_window(self):
 		self.make_hide()
+		self.btn_test1_make.hide(), self.btn_test2_make.hide(), self.btn_test3_make.hide(), self.btn_test4_make.hide()
 		self.btn_make_main.show(), self.btn_create_main.show(), self.btn_exit_project.show()
 	def main_hide(self):
 		self.btn_make_main.hide(), self.btn_create_main.hide(), self.btn_exit_project.hide()
@@ -205,11 +223,11 @@ class Window(QWidget):
 	# ----------------------------------------------------------------------------------
 	def make_test_next(self):
 		self.number_list_make += 1
-		self.check_make_btn()
+		self.make_check_btn()
 	def make_test_back(self):
 		self.number_list_make -= 1
-		self.check_make_btn()
-	def check_make_btn(self):
+		self.make_check_btn()
+	def make_check_btn(self):
 		self.max_make = (len(self.list_test) + 3) // 4 - 1
 		match self.number_list_make:
 			case self.max_make:
@@ -219,12 +237,33 @@ class Window(QWidget):
 			case _:
 				self.btn_right_make.show()
 				self.btn_left_make.show()
+		self.make_name_test()
 	
 	def make_test(self):
 		self.main_hide()
 		self.btn_back_make.show(), self.btn_left_make.show(), self.btn_right_make.show()
-		self.check_make_btn()
-	
+		self.btn_test1_make.show(), self.btn_test2_make.show(), self.btn_test3_make.show(), self.btn_test4_make.show()
+		self.make_name_test()
+		self.make_check_btn()
+	def make_name_test(self):
+		self.btn_test1_make.setText(f"{self.list_test[self.number_list_make * 4 + 0][1]} || {self.list_test[self.number_list_make * 4 + 0][2]}")
+		try:
+			self.btn_test2_make.show()
+			self.btn_test2_make.setText(f"{self.list_test[self.number_list_make * 4 + 1][1]} || {self.list_test[self.number_list_make * 4 + 1][2]}")
+		except:
+			self.btn_test2_make.hide()
+		try:
+			self.btn_test3_make.show()
+			self.btn_test3_make.setText(f"{self.list_test[self.number_list_make * 4 + 2][1]} || {self.list_test[self.number_list_make * 4 + 2][2]}")
+		except:
+			self.btn_test3_make.hide()
+		try:
+			self.btn_test4_make.show()
+			self.btn_test4_make.setText(f"{self.list_test[self.number_list_make * 4 + 3][1]} || {self.list_test[self.number_list_make * 4 + 3][2]}")
+		except:
+			self.btn_test4_make.hide()
+		
+			
 	def make_hide(self):
 		self.btn_back_make.hide(), self.btn_left_make.hide(), self.btn_right_make.hide()
 	#----------------------------------------------------------------------------------
